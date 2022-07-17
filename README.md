@@ -35,10 +35,32 @@ UI frameworkオプションとしてVuetify.jsをインストール
 }
 '''
 
+DateListItem.vue に表示したい内容は開始日時と終了日時をプロパティで受け取る準備
+ライブラリLuxonをnpmを使ってインストール
+https://moment.github.io/luxon/#/
+
+'''npm i -S luxon'''
+
+components/EventEditor.vueでよみこみ
+'''import { DateTime } from 'luxon'''
+'''default値の設定
+export default {
+  data () {
+    return {
+      now: DateTime.now(),
+    }
+  }
+}
+'''
+
+components/DateListItem.vueで表示させたいフォーマットを記述
+`{{ date.toFormat('yyyy/MM/dd') }}`
 
 
+コンポーネント内で変更があったときにその変数がリアルタイムで更新されるよう設定。
+親コンポーネントから子の v-model に変数を渡しておく
 
-
+v-modelを自作コンポーネントに実装する
 
 
 
