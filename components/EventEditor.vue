@@ -8,20 +8,14 @@
           required
           counter
           maxlength="25"
-          :value="title"
-          @change="(value) => {
-            title = value
-            }"
+          v-model="title"
         />
         <!-- 詳細入力 -->
         <v-textarea
           label="Description"
           counter
           maxlength="200"
-          :value="description"
-          @change="(value) => {
-            description = value
-          }"
+          v-model="description"
         />
       </v-col>
       <v-col>
@@ -30,10 +24,7 @@
             <!-- 時刻選択 -->
             <v-time-picker
             format="24hr"
-            :value="time"
-            @change="(value) => {
-                time = value
-              }"
+            v-model="time"
           />
           </v-col>
           <v-col>
@@ -52,7 +43,7 @@
           class="overflow-y-auto"
           max-height="75vh"
         >
-          <date-list-item />
+          <date-list-item :date="now" />
         </v-list>
       </v-col>
     </v-row>
@@ -60,12 +51,44 @@
 </template>
 
 <script>
+import { DateTime } from 'luxon'
 export default {
+  model: {
+    prop: 'value',
+    event: 'change'
+  },
+  props: {
+    value: {
+      type: Object,
+      required: true
+    }
+  },
   data(){
     return{
+      now: DateTime.now(),
       title: '',
       description: '',
       time: '19:00'
+    }
+  },
+  methods: {
+    changeEvent (){
+      this.$emit('change', {
+        timtle: this.title,
+        description: this.description
+      })
+    }
+  },
+  watch: {
+    value (){
+      this.title = this.value.title
+      this.description = this.value.description
+    },
+    title(){
+      this.changeEvent()
+    },
+    description(){
+      this.changeEvent()
     }
   }
 }
