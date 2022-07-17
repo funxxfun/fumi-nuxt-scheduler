@@ -1,10 +1,13 @@
 # app
+簡単なスケジュール管理のためのアプリケーション
+フレームワークNuxt.jsを使用してVueを実装
 
 ## Build Setup
 
 ```bash
 # install dependencies
-$ npm install
+$ npx create-nuxt-app app
+npmのようにグローバルインストールする必要なし
 
 # serve with hot reload at localhost:3000
 $ npm run dev
@@ -19,7 +22,31 @@ $ npm run generate
 
 For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
 
+## How to Create app
+
+UI frameworkオプションとしてVuetify.jsをインストール
+`$ npm install -D @nuxtjs/vuetify`
+
+'''nuxt.config.jsに追記
+{
+  buildModules: [
+    '@nuxtjs/vuetify'
+  ]
+}
+'''
+
+
+
+
+
+
+
+
+
+
 ## Special Directories
+Single Page Application(SPA)を可能にするrouting
+ルーティングライブラリ vue-routerは１ページを１コンポーネントに対応して設定し、Nuxt.jsではこれをさらに簡単に、pagesディレクトリにある１ファイルを１ページに対応するよう構成されている。
 
 You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
 
