@@ -33,6 +33,7 @@
               no-title
               bottom
               color="primary"
+              @change="addDate"
             />
           </v-col>
         </v-row>
@@ -49,6 +50,7 @@
             v-for="v in dates"
             :key="v.id"
             :date="v.from"
+            :on-remove="() => removeDate(v.id)"
           />
         </v-list>
       </v-col>
@@ -75,29 +77,51 @@ export default {
       title: '',
       description: '',
       time: '19:00',
-      datas: [{
+      dates: [{
         id: 1,
         from:DateTime.now()
       }]
     }
   },
   methods: {
-    changeEvent (){
+    changeEvent () {
       this.$emit('change', {
-        timtle: this.title,
-        description: this.description
+        title: this.title,
+        description: this.description,
+        dates: this.dates
       })
-    }
+    },
+    addDate (d) {
+      const time = DateTime.fromFormat(this.time, 'HH:mm')
+      const date = DateTime
+        .fromISO(d)
+        .set({
+          hour: time.hour,
+          minute: time.minute
+        })
+      this.dates = [
+        ...this.dates,
+        {
+          id: +new Date(),
+          from: date
+        }
+      ]
+      this.changeEvent()
+    },
+    removeDate(id){
+      this.dates = this.dates.filter((d) => d.id !== id)
+      this.changeEvent()
+    },
   },
   watch: {
-    value (){
+    value () {
       this.title = this.value.title
       this.description = this.value.description
     },
-    title(){
+    title () {
       this.changeEvent()
     },
-    description(){
+    description () {
       this.changeEvent()
     }
   }
