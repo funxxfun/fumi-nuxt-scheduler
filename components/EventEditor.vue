@@ -43,7 +43,13 @@
           class="overflow-y-auto"
           max-height="75vh"
         >
-          <date-list-item :date="now" />
+        <!-- 候補日程リストが空のときにメッセージを表示する -->
+          <div v-if="dates.length === 0">Click Calendar to add date!</div>
+          <date-list-item
+            v-for="v in dates"
+            :key="v.id"
+            :date="v.from"
+          />
         </v-list>
       </v-col>
     </v-row>
@@ -52,6 +58,7 @@
 
 <script>
 import { DateTime } from 'luxon'
+
 export default {
   model: {
     prop: 'value',
@@ -65,10 +72,13 @@ export default {
   },
   data(){
     return{
-      now: DateTime.now(),
       title: '',
       description: '',
-      time: '19:00'
+      time: '19:00',
+      datas: [{
+        id: 1,
+        from:DateTime.now()
+      }]
     }
   },
   methods: {
