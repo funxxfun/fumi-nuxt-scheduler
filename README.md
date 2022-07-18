@@ -36,7 +36,7 @@ UI frameworkオプションとしてVuetify.jsをインストール
 '''
 
 DateListItem.vue に表示したい内容は開始日時と終了日時をプロパティで受け取る準備
-ライブラリLuxonをnpmを使ってインストール
+ライブラリLuxonをnpmコマンドでインストール
 https://moment.github.io/luxon/#/
 
 '''npm i -S luxon'''
