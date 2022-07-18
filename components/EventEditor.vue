@@ -9,6 +9,9 @@
           counter
           maxlength="25"
           v-model="title"
+          counter
+          required
+          :rules="[val => (val || '').length > 0 || 'This field is required']"
         />
         <!-- 詳細入力 -->
         <v-textarea
@@ -16,6 +19,7 @@
           counter
           maxlength="200"
           v-model="description"
+          counter
         />
       </v-col>
       <v-col>
@@ -25,6 +29,7 @@
             <v-time-picker
             format="24hr"
             v-model="time"
+            :allowed-minutes="m => m % 5 === 0"
           />
           </v-col>
           <v-col>
@@ -34,6 +39,8 @@
               bottom
               color="primary"
               @change="addDate"
+              :allowed-dates="v => !dates.map(d => d.from.toFormat('yyyy-MM-dd')).includes(v)"
+              :min="minDate"
             />
           </v-col>
         </v-row>
@@ -77,6 +84,7 @@ export default {
       title: '',
       description: '',
       time: '19:00',
+      minDate: DateTime.now().toFormat('yyyy-MM-dd'),
       dates: [{
         id: 1,
         from:DateTime.now()
